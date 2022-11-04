@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import Homepage from "./Home/Home";
+import SearchInput from "./SearchInput/SearchInput";
+import SearchResults from "./SearchResults/SearchResults";
+import SearchDetails from "./SearchDetails/SearchDetails";
+import NavBar from "./NavBar/NavBar";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import { useState } from "react";
 
 function App() {
+  const [food, setFood] = useState({})
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <div className="main-container">
+          <NavBar />
+
+          <Switch>
+            <Route exact path="/">
+              <Homepage />
+            </Route>
+            <Route path="/search">
+              <SearchInput setFood={setFood}/>
+            </Route>
+            <Route path="/searchresult">
+             <SearchResults setFood={setFood} food={food}/>
+            </Route>
+            <Route path="/singlemeal/:id">
+             <SearchDetails />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
   );
 }
 
